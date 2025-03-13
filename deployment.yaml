@@ -23,7 +23,7 @@ spec:
   selector:
     matchLabels:
       app: backend-service
-  stategy:
+  strategy:
     type: Recreate
   template:
     metadata:
@@ -33,7 +33,7 @@ spec:
     spec:
       serviceAccountName: default
       containers:
-        - images: 774305578623.dkr.ecr.ap-southeast-1.amazonaws.com/backend-service-luan
+        - image: 774305578623.dkr.ecr.ap-southeast-1.amazonaws.com/backend-service-luan:dev
           name: backend-service
           imagePullPolicy: Always
           ports:
@@ -42,12 +42,12 @@ spec:
           env:
           - name: DATABASE_SERVICE_URL
             valueFrom:
-              secretKeyref:
+              secretKeyRef:
                 name: backend-secret
                 key: database_service_url
 ---
 apiVersion: v1
-kind: Service
+kind: Secret
 metadata:
   name: backend-secret
 type: Opaque
